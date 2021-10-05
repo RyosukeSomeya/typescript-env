@@ -22,13 +22,13 @@ npm install
 
 ### 4. tsファイルをコンパイルする
 
-ファイルを指定したコンパイル（tsconfig.jsonの設定内容は無視される。）
+ファイルを直接指定したコンパイル（tsconfig.jsonの設定内容は無視される。）
 
 ```bash
 npx tsc ./src/index.ts
 ```
 
-tsconfig.jsonの設定を反映させるコンパイル (ファイルの指定を行わない)
+tsconfig.jsonの設定を反映させるコンパイル（ファイルの指定を行わないコンパイル）
 
 ```bash
 npx tsc
