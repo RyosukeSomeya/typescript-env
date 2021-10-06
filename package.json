@@ -1,0 +1,24 @@
+{
+  "name": "typescript_env",
+  "version": "1.0.0",
+  "description": "typescript learning environment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RyosukeSomeya/typescript-env.git"
+  },
+  "author": "RyosukeSomeya",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RyosukeSomeya/typescript-env/issues"
+  },
+  "homepage": "https://github.com/RyosukeSomeya/typescript-env#readme",
+  "devDependencies": {
+    "@types/node": "^16.10.2",
+    "tslint": "^6.1.3",
+    "typescript": "^4.4.3"
+  }
+}
