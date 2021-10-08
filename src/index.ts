@@ -9,6 +9,7 @@ class ObjectWrapper {
     constructor(_obj: myObj) {
       this._obj = _obj;
     }
+
     /**
      * this._objのコピーを返却
      * @return Object
