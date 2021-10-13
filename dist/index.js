@@ -10,7 +10,6 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-;
 var ObjectWrapper = /** @class */ (function () {
     /***
      * 引数のオブジェクトのコピーを this._objに設定
@@ -62,16 +61,17 @@ var ObjectWrapper = /** @class */ (function () {
  * check script
  * 完成したら、以下のスクリプトがすべてOKになる。
  */
-// const obj1 = { a: '01', b: '02' };
-// const wrappedObj1 = new ObjectWrapper(obj1);
-// if (wrappedObj1.obj.a === '01') {
-//   console.log('OK: get obj()');
-// } else {
-//   console.error('NG: get obj()');
-// }
+var obj1 = { a: '01', b: '02' };
+var wrappedObj1 = new ObjectWrapper(obj1);
+if (wrappedObj1.obj.a === '01') {
+    console.log('OK: get obj()');
+}
+else {
+    console.error('NG: get obj()');
+}
 // if (
 //   wrappedObj1.set('c', '03') === false && // obj1が持っていないプロパティだからfalse
-//   wrappedObj1.set('b', '04') === true && // obj1が持っているプロパティなのでtrue、値をセットできる　
+//   wrappedObj1.set('b', '04') === true && // obj1が持っているプロパティなのでtrue、値をセットできる
 //   wrappedObj1.obj.b === '04'
 // ) {
 //   console.log('OK: set(key, val)');
@@ -86,7 +86,6 @@ var ObjectWrapper = /** @class */ (function () {
 var obj2 = { a: '01', b: '02', bb: '02', bbb: '02' };
 var wrappedObj2 = new ObjectWrapper(obj2);
 var keys = wrappedObj2.findKeys('02');
-console.log(keys);
 // if (
 //   wrappedObj2.findKeys('03').length === 0 &&
 //   keys.includes('b') &&
