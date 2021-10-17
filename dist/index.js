@@ -10,11 +10,14 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+// 引数のObjectの型を継承する
 var ObjectWrapper = /** @class */ (function () {
     /***
      * 引数のオブジェクトのコピーを this._objに設定
      */
+    // インスタンス化したObjectの型
     function ObjectWrapper(_obj) {
+        // スプレッド構文で_objのコピーを作成し設定
         this._obj = __assign({}, _obj);
     }
     Object.defineProperty(ObjectWrapper.prototype, "obj", {
@@ -23,7 +26,8 @@ var ObjectWrapper = /** @class */ (function () {
          * @return Object
          */
         get: function () {
-            return this._obj;
+            // this._objのコピーをスプレッド構文で作成しreturn
+            return __assign({}, this._obj);
         },
         enumerable: false,
         configurable: true
@@ -33,27 +37,26 @@ var ObjectWrapper = /** @class */ (function () {
      * @param key オブジェクトのキー
      * @param val オブジェクトの値
      */
+    // keyとvalの型はオブジェクトのもの
+    // 考え方
+    // インスタンス化したオブジェクトの型と仮定
+    // type MyObj = {
+    //   a: string;
+    //   b: string;
+    // };
+    // keyofでMyObjeの型を取得できる
+    // type MyObjKeys = keyof MyObj; // 'a'|'b' となる
+    // => keyの型をインスタンス化したオブジェクトの型から持ってこれる
+    // MyObjのvalueの型は、オブジェクトのkeyの値でアクセスすることで型を取得できる
+    // MyObjが{ a: '01', b: '02' }だったとすると、 MyObj['a']でアクセスすることで、'01'のstring型となる
+    // type MyObjValue = MyObj[keyof MyObj];
+    // => valueの型をインスタンス化したオブジェクトの型から持ってこれる
     ObjectWrapper.prototype.set = function (key, val) {
-        this.obj[key] = val;
-        return true;
-    };
-    /**
-     * 指定したキーの値のコピーを返却
-     * 指定のキーが存在しない場合 undefinedを返却
-     * @param key オブジェクトのキー
-     */
-    ObjectWrapper.prototype.get = function (key) {
-        return this.obj[key];
-    };
-    /**
-     * 指定した値を持つkeyの配列を返却。該当のものがなければ空の配列を返却。
-     */
-    ObjectWrapper.prototype.findKeys = function (val) {
-        var _this = this;
-        var result = Object.keys(this.obj).filter(function (key) {
-            return _this._obj[key] === val;
-        });
-        return result;
+        if (key in this._obj) {
+            this._obj[key] = val;
+            return true;
+        }
+        return false;
     };
     return ObjectWrapper;
 }());
@@ -69,23 +72,24 @@ if (wrappedObj1.obj.a === '01') {
 else {
     console.error('NG: get obj()');
 }
-// if (
-//   wrappedObj1.set('c', '03') === false && // obj1が持っていないプロパティだからfalse
-//   wrappedObj1.set('b', '04') === true && // obj1が持っているプロパティなのでtrue、値をセットできる
-//   wrappedObj1.obj.b === '04'
-// ) {
-//   console.log('OK: set(key, val)');
-// } else {
-//   console.error('NG: set(key, val)');
-// }
+if (
+wrappedObj1.set('c', '03') === false &&
+wrappedObj1.set('b', '04') === true &&
+    wrappedObj1.obj.b === '04') {
+    console.log('OK: set(key, val)');
+}
+else {
+    console.error('NG: set(key, val)');
+}
+console.log(wrappedObj1.set('b', '03') )
 // if (wrappedObj1.get('b') === '04' && wrappedObj1.get('c') === undefined) {
 //   console.log('OK: get(key)');
 // } else {
 //   console.error('NG: get(key)');
 // }
-var obj2 = { a: '01', b: '02', bb: '02', bbb: '02' };
-var wrappedObj2 = new ObjectWrapper(obj2);
-var keys = wrappedObj2.findKeys('02');
+// const obj2 = { a: '01', b: '02', bb: '02', bbb: '02' };
+// const wrappedObj2 = new ObjectWrapper(obj2);
+// const keys = wrappedObj2.findKeys('02');
 // if (
 //   wrappedObj2.findKeys('03').length === 0 &&
 //   keys.includes('b') &&
