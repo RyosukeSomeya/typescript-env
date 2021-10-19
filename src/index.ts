@@ -53,9 +53,7 @@ class ObjectWrapper<T extends Object> {
    */
   // key オブジェクトのキーなので、undefinedを返却するパターンは型で防げる
   get(key: keyof T): T[keyof T] {
-    // これはコピー？
-    const copiedValue = this._obj[key];
-    return copiedValue;
+    return { ...this._obj[key] };
   }
 
   /**
@@ -95,6 +93,7 @@ if (
 } else {
   console.error('NG: get(key)');
 }
+console.log(wrappedObj1.get('b'));
 
 // const obj2 = { a: '01', b: '02', bb: '02', bbb: '02' };
 // const wrappedObj2 = new ObjectWrapper(obj2);
