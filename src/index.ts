@@ -42,12 +42,8 @@ class ObjectWrapper<T extends Object> {
   // type MyObjValue = MyObj[keyof MyObj];
   // => valueの型をインスタンス化したオブジェクトの型から持ってこれる
   set(key: keyof T, val: T[keyof T]): boolean {
-    if (key in this._obj) {
-      this._obj[key] = val;
-      return true;
-    }
-
-    return false;
+    this._obj[key] = val;
+    return true;
   }
 
   /**
@@ -55,7 +51,12 @@ class ObjectWrapper<T extends Object> {
    * 指定のキーが存在しない場合 undefinedを返却
    * @param key オブジェクトのキー
    */
-  // get(key) {}
+  // key オブジェクトのキーなので、undefinedを返却するパターンは型で防げる
+  get(key: keyof T): T[keyof T] {
+    // これはコピー？
+    const copiedValue = this._obj[key];
+    return copiedValue;
+  }
 
   /**
    * 指定した値を持つkeyの配列を返却。該当のものがなければ空の配列を返却。
@@ -86,11 +87,14 @@ if (
   console.error('NG: set(key, val)');
 }
 
-// if (wrappedObj1.get('b') === '04' && wrappedObj1.get('c') === undefined) {
-//   console.log('OK: get(key)');
-// } else {
-//   console.error('NG: get(key)');
-// }
+if (
+  wrappedObj1.get('b') === '04'
+  //&& wrappedObj1.get('c') === undefined
+) {
+  console.log('OK: get(key)');
+} else {
+  console.error('NG: get(key)');
+}
 
 // const obj2 = { a: '01', b: '02', bb: '02', bbb: '02' };
 // const wrappedObj2 = new ObjectWrapper(obj2);
