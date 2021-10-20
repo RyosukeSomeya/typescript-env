@@ -1,4 +1,6 @@
+const R = require('ramda');
 // 引数のObjectの型を継承する
+
 class ObjectWrapper<T extends Object> {
   private _obj: T;
 
@@ -53,7 +55,10 @@ class ObjectWrapper<T extends Object> {
    */
   // key オブジェクトのキーなので、undefinedを返却するパターンは型で防げる
   get(key: keyof T): T[keyof T] {
-    return { ...this._obj[key] };
+    const data = R.clone(this._obj[key]);
+    console.log('value: ' + data);
+    return data;
+    // return { ...this._obj[key] };
   }
 
   /**
