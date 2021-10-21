@@ -64,7 +64,16 @@ class ObjectWrapper<T extends Object> {
   /**
    * 指定した値を持つkeyの配列を返却。該当のものがなければ空の配列を返却。
    */
-  // findKeys(val: unknown) {}
+  // valはインスタンス化したオブジェクトの値
+  // returnはオブジェクトのkeyの配列
+  findKeys(val: T[keyof T]): (keyof T)[] {
+    const result: (keyof T)[] = (Object.keys(this._obj) as (keyof T)[]).filter(
+      (key: keyof T): boolean => {
+        return this._obj[key] === val;
+      }
+    );
+    return result;
+  }
 }
 
 /**
@@ -100,17 +109,18 @@ if (
 }
 console.log(wrappedObj1.get('b'));
 
-// const obj2 = { a: '01', b: '02', bb: '02', bbb: '02' };
-// const wrappedObj2 = new ObjectWrapper(obj2);
-// const keys = wrappedObj2.findKeys('02');
-// if (
-//   wrappedObj2.findKeys('03').length === 0 &&
-//   keys.includes('b') &&
-//   keys.includes('bb') &&
-//   keys.includes('bbb') &&
-//   keys.length === 3
-// ) {
-//   console.log('OK: findKeys(val)');
-// } else {
-//   console.error('NG: findKeys(val)');
-// }
+const obj2 = { a: '01', b: '02', bb: '02', bbb: '02' };
+const wrappedObj2 = new ObjectWrapper(obj2);
+const keys = wrappedObj2.findKeys('02');
+console.log(keys);
+if (
+  wrappedObj2.findKeys('03').length === 0 &&
+  keys.includes('b') &&
+  keys.includes('bb') &&
+  keys.includes('bbb') &&
+  keys.length === 3
+) {
+  console.log('OK: findKeys(val)');
+} else {
+  console.error('NG: findKeys(val)');
+}
