@@ -67,12 +67,8 @@ class ObjectWrapper<T extends Object> {
   // valはインスタンス化したオブジェクトの値
   // returnはオブジェクトのkeyの配列
   findKeys(val: T[keyof T]): (keyof T)[] {
-    const result: (keyof T)[] = (Object.keys(this._obj) as (keyof T)[]).filter(
-      (key: keyof T): boolean => {
-        return this._obj[key] === val;
-      }
-    );
-    return result;
+    const items: (keyof T)[] = R.keys(this._obj);
+    return items.filter((item: keyof T): boolean => this.obj[item] === val);
   }
 }
 
